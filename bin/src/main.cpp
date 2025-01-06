@@ -30,9 +30,16 @@ int main() {
   );
 
   discord::Activity activity{};
+  discord::ActivityTimestamps& timestamps = activity.GetTimestamps();
+
   activity.SetDetails("neovim");
-  activity.SetState("editing");
+  activity.SetState("TESTING CUSTOM PLUGIN");
   activity.SetType(discord::ActivityType::Playing);
+
+  auto now = std::chrono::system_clock::now();
+  auto start_timestamp = std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch()).count();
+  timestamps.SetStart(start_timestamp);
+
   state.core->ActivityManager().UpdateActivity(activity, [](discord::Result result) {
     std::cout << ((result == discord::Result::Ok) ? "Succeeded" : "Failed")
       << " updating activity!\n";
