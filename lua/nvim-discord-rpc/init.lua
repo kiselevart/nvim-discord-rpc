@@ -1,8 +1,8 @@
-print("Hello, world")
 local M = {}
 
 function M.setup()
-  print("hello, world!")
+  local command = '../../bin/discord-rpc'
+  os.execute(command)
 end
 
 return M
