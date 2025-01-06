@@ -1,0 +1,4 @@
+.DS_Store
+
+# ignore binary object files
+bin/obj
