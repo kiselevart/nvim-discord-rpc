@@ -1,3 +1,4 @@
+print("Hello, world")
 local M = {}
 
 function M.setup()
