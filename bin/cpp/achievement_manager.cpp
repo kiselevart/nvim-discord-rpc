@@ -13,7 +13,8 @@ namespace discord {
 
 class AchievementEvents final {
 public:
-    static void OnUserAchievementUpdate(void* callbackData, DiscordUserAchievement* userAchievement)
+    static void DISCORD_CALLBACK OnUserAchievementUpdate(void* callbackData,
+                                                         DiscordUserAchievement* userAchievement)
     {
         auto* core = reinterpret_cast<Core*>(callbackData);
         if (!core) {
@@ -30,7 +31,7 @@ IDiscordAchievementEvents AchievementManager::events_{
 };
 
 void AchievementManager::SetUserAchievement(Snowflake achievementId,
-                                            std::int64_t percentComplete,
+                                            std::uint8_t percentComplete,
                                             std::function<void(Result)> callback)
 {
     static auto wrapper = [](void* callbackData, EDiscordResult result) -> void {

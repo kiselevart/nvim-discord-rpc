@@ -2,7 +2,7 @@
 #include <csignal>
 #include <thread>
 #include <chrono>
-#include "discord-files/discord.h"
+#include "../cpp/discord.h"
 
 struct DiscordState {
   std::unique_ptr<discord::Core> core;
@@ -15,13 +15,19 @@ namespace {
 int main() {
   DiscordState state{};
   discord::Core* core{};
-  auto response = discord::Core::Create(146946889156263936, DiscordCreateFlags_Default, &core);
+  auto response = discord::Core::Create(1325672105496285228, DiscordCreateFlags_Default, &core);
   state.core.reset(core);
 
   if (!state.core) {
     std::cerr << "Failed to instantiate Discord!";
     std::exit(-1);
   }
+
+  state.core->SetLogHook(
+    discord::LogLevel::Debug, [](discord::LogLevel level, const char* message) {
+        std::cerr << "Log(" << static_cast<uint32_t>(level) << "): " << message << "\n";
+    }
+  );
 
   discord::Activity activity{};
   activity.SetDetails("neovim");
